@@ -20,4 +20,4 @@ jobs:
         PASS: ${{ secrets.PASS }}
         DC_WEBHOOK_URL: ${{ secrets.DC_WEBHOOK_URL }}
         DC_USER_IDS: ${{ secrets.DC_USER_IDS }}
-      run: python main.py
+      run: pip install -r requirements.txt && python main.py
