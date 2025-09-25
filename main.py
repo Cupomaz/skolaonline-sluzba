@@ -21,24 +21,10 @@ def create_ping(sluzba):
 
     return ping_str
 
-def read_secret(name):
-    path = f"/run/secrets/{name}"
-    if os.path.exists(path):
-        with open(path) as f:
-            return f.read().strip()
-    return None
-
-if find_dotenv() != '':
-    load_dotenv()
-    EMAIL = os.getenv("EMAIL")
-    PASS = os.getenv("PASS")
-    DC_WEBHOOK_URL = os.getenv("DC_WEBHOOK_URL")
-    DC_USER_IDS = os.getenv("DC_USER_IDS")
-else:
-    EMAIL = read_secret("EMAIL")
-    PASS = read_secret("PASS")
-    DC_WEBHOOK_URL = read_secret("DC_WEBHOOK_URL")
-    DC_USER_IDS = read_secret("DC_USER_IDS")
+EMAIL = os.getenv("EMAIL")
+PASS = os.getenv("PASS")
+DC_WEBHOOK_URL = os.getenv("DC_WEBHOOK_URL")
+DC_USER_IDS = os.getenv("DC_USER_IDS")
 
 login_url = "https://aplikace.skolaonline.cz/SOL/Prihlaseni.aspx"
 kalendar_url = "https://aplikace.skolaonline.cz/SOL/App/Kalendar/KZK001_KalendarTyden.aspx"
