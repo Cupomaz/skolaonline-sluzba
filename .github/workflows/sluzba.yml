@@ -1,6 +1,23 @@
-steps:
-- uses: actions/checkout@v5
-- uses: actions/setup-python@v6
-  with:
-    python-version: '3.13' 
-- run: python main.py
+name: Sluzba
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v5
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.13' 
+    - name: Run script
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        PASS: ${{ secrets.PASS }}
+        DC_WEBHOOK_URL: ${{ secrets.DC_WEBHOOK_URL }}
+        DC_USER_IDS: ${{ secrets.DC_USER_IDS }}
+      run: python main.py
