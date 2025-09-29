@@ -17,7 +17,7 @@ def create_ping(sluzba):
     
     for person in people:
         if DC_USER_IDS[person] != 0:
-            ping_str += f"<@{DC_USER_IDS[person]}> "
+            ping_str += f"<@!{DC_USER_IDS[person]}> "
 
     return ping_str
 
