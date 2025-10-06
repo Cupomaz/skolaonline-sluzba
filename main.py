@@ -16,10 +16,8 @@ def create_ping(sluzba):
     ping_str = ""
 
     for person in people:
-        # Remove <b> and </b> tags
-        clean_person = re.sub(r'</?b>', '', person)
-        if DC_USER_IDS.get(clean_person, 0) != 0:
-            ping_str += f"<@!{DC_USER_IDS[clean_person]}> "
+        if DC_USER_IDS.get(person, 0) != 0:
+            ping_str += f"<@!{DC_USER_IDS[person]}> "
 
     return ping_str
 
@@ -40,6 +38,8 @@ kalendar = s.get(kalendar_url)
 sluzba_unparsed = get_line(kalendar.text.splitlines())
 
 sluzba = re.search(r'>(.*?)</span>', sluzba_unparsed).group(1)
+sluzba = re.sub(r'</?b>', '', sluzba)
+
 
 print(sluzba)
 
