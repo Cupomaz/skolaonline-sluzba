@@ -14,10 +14,12 @@ def get_line(text):
 def create_ping(sluzba):
     people = sluzba.split(", ")
     ping_str = ""
-    
+
     for person in people:
-        if DC_USER_IDS[person] != 0:
-            ping_str += f"<@!{DC_USER_IDS[person]}> "
+        # Remove <b> and </b> tags
+        clean_person = re.sub(r'</?b>', '', person)
+        if DC_USER_IDS.get(clean_person, 0) != 0:
+            ping_str += f"<@!{DC_USER_IDS[clean_person]}> "
 
     return ping_str
 
