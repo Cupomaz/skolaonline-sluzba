@@ -45,14 +45,21 @@ print(sluzba)
 
 DC_USER_IDS = json.loads(DC_USER_IDS)
 
-s.post(DC_WEBHOOK_URL, json={
-  "content": None,
-  "embeds": [
-    {
-      "title": sluzba,
-      "color": 1288824,
-      "description": create_ping(sluzba)
-    }
-  ],
-  "attachments": []
-})
+if "," not in sluzba:
+    s.post(DC_WEBHOOK_URL, json={
+      "content": "Služba není definována",
+      "embeds": [],
+      "attachments": []
+    })
+else:
+    s.post(DC_WEBHOOK_URL, json={
+      "content": None,
+      "embeds": [
+        {
+          "title": sluzba,
+          "color": 1288824,
+          "description": create_ping(sluzba)
+        }
+      ],
+      "attachments": []
+    })
