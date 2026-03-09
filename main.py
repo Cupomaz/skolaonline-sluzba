@@ -10,6 +10,7 @@ def get_line(text):
     for line in text:
         if re.search(r'<span id="lblSluzbaNazev".*>.*</span>', line):
             return line
+    return None
 
 def create_ping(sluzba):
     people = sluzba.split(", ")
@@ -37,21 +38,20 @@ kalendar = s.get(kalendar_url)
 
 sluzba_unparsed = get_line(kalendar.text.splitlines())
 
-sluzba = re.search(r'>(.*?)</span>', sluzba_unparsed).group(1)
-sluzba = re.sub(r'</?b>', '', sluzba)
-
-
-print(sluzba)
-
-DC_USER_IDS = json.loads(DC_USER_IDS)
-
-if "," not in sluzba:
+if sluzba_unparsed is None:
     s.post(DC_WEBHOOK_URL, json={
       "content": "Služba není definována",
       "embeds": [],
       "attachments": []
     })
 else:
+    sluzba = re.search(r'>(.*?)</span>', sluzba_unparsed).group(1)
+    sluzba = re.sub(r'</?b>', '', sluzba)
+
+    print(sluzba)
+
+    DC_USER_IDS = json.loads(DC_USER_IDS)
+    
     s.post(DC_WEBHOOK_URL, json={
       "content": None,
       "embeds": [
