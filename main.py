@@ -1,10 +1,8 @@
 import requests
 import os
-from dotenv import load_dotenv, find_dotenv
 import re
-import json
 
-EMAIL, PASS, DC_WEBHOOK_URL, DC_USER_IDS = None, None, None, None
+EMAIL, PASS, DC_WEBHOOK_URL = None, None, None
 
 def get_line(text):
     for line in text:
@@ -12,20 +10,9 @@ def get_line(text):
             return line
     return None
 
-def create_ping(sluzba):
-    people = sluzba.split(", ")
-    ping_str = ""
-
-    for person in people:
-        if DC_USER_IDS.get(person, 0) != 0:
-            ping_str += f"<@!{DC_USER_IDS[person]}> "
-
-    return ping_str
-
 EMAIL = os.getenv("EMAIL")
 PASS = os.getenv("PASS")
 DC_WEBHOOK_URL = os.getenv("DC_WEBHOOK_URL")
-DC_USER_IDS = os.getenv("DC_USER_IDS")
 
 login_url = "https://aplikace.skolaonline.cz/SOL/Prihlaseni.aspx"
 kalendar_url = "https://aplikace.skolaonline.cz/SOL/App/Kalendar/KZK001_KalendarTyden.aspx"
@@ -50,15 +37,12 @@ else:
 
     print(sluzba)
 
-    DC_USER_IDS = json.loads(DC_USER_IDS)
-    
     s.post(DC_WEBHOOK_URL, json={
       "content": None,
       "embeds": [
         {
           "title": sluzba,
           "color": 1288824,
-          "description": create_ping(sluzba)
         }
       ],
       "attachments": []

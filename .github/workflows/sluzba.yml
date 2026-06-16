@@ -19,5 +19,5 @@ jobs:
         EMAIL: ${{ secrets.EMAIL }}
         PASS: ${{ secrets.PASS }}
         DC_WEBHOOK_URL: ${{ secrets.DC_WEBHOOK_URL }}
-        DC_USER_IDS: ${{ secrets.DC_USER_IDS }}
+
       run: pip install -r requirements.txt && python main.py
